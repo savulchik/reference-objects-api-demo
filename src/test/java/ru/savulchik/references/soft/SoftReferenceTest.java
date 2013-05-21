@@ -25,6 +25,20 @@ public class SoftReferenceTest {
         MemoryUtils.freeConsumedMemory();
     }
 
+    /**
+     * Мягкая ссылка очищается при нехватке памяти.
+     *
+     * java -Xms32m -Xmx32m -XX:+PrintGC -XX:+PrintGCTimeStamps
+     *
+     * 0,641: [GC 24149K->21264K(31424K), 0,0122790 secs]
+     * 0,653: [Full GC 21264K->21238K(31424K), 0,0352540 secs]
+     * 0,695: [Full GC 28853K->28152K(31424K), 0,0281610 secs]
+     * 0,723: [Full GC 28152K->11738K(31424K), 0,0418310 secs]
+     * 0,782: [Full GC 28200K->28123K(31424K), 0,0205200 secs]
+     * 0,803: [Full GC 28123K->28123K(31424K), 0,0143070 secs]
+     *
+     * @throws Exception
+     */
     @Test
     public void testSoftReferenceIsClearedOnMemoryDemand() throws Exception {
         final int memoryBlockSize = 16 * MemoryUtils.MEGABYTE;
